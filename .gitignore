@@ -30,3 +30,9 @@ go.work.sum
 # Editor/IDE
 .idea/
 .vscode/
+
+# Personal productivity and agent files
+.claude
+CLAUDE.local.md
+.obsidian/
+.agents/settings.local.json
