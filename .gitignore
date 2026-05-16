@@ -35,3 +35,4 @@ go.work.sum
 .claude
 CLAUDE.local.md
 .obsidian/
+.agents/settings.local.json
