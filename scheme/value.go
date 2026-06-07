@@ -3,8 +3,6 @@
 // representation of every Scheme datum and the helpers for building lists.
 package scheme
 
-import "sync"
-
 // Value is the universal type of every Scheme datum. The concrete dynamic types
 // stored in a Value are:
 //
@@ -65,16 +63,19 @@ type Vector struct {
 }
 
 // internTable canonicalises symbol names so equal names map to one Symbol value.
-var internTable sync.Map // map[string]Symbol
+// A plain map suffices: the interpreter is single-threaded (one reader/eval/REPL
+// goroutine), so no synchronisation is needed.
+var internTable = map[string]Symbol{}
 
 // Intern returns the canonical Symbol for name, interning it on first use. Going
 // through Intern keeps symbol identity cheap for eq? in a later package.
 func Intern(name string) Symbol {
-	if v, ok := internTable.Load(name); ok {
-		return v.(Symbol)
+	if s, ok := internTable[name]; ok {
+		return s
 	}
-	actual, _ := internTable.LoadOrStore(name, Symbol(name))
-	return actual.(Symbol)
+	s := Symbol(name)
+	internTable[name] = s
+	return s
 }
 
 // Cons builds a new pair (car . cdr).

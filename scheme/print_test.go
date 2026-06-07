@@ -69,6 +69,15 @@ func TestDisplayString(t *testing.T) {
 	}
 }
 
+func TestWriteStringPanicsOnUnknownType(t *testing.T) {
+	defer func() {
+		if recover() == nil {
+			t.Error("expected panic when printing an unknown value type")
+		}
+	}()
+	WriteString(struct{}{})
+}
+
 func TestIntern(t *testing.T) {
 	a := Intern("foo")
 	b := Intern("foo")

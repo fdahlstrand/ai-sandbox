@@ -69,9 +69,11 @@ func writeValue(b *strings.Builder, v Value, write bool) {
 		}
 		b.WriteByte(')')
 	default:
-		// Unknown value type (e.g. a procedure added later, or a stray Go value):
-		// fall back to Go formatting so the printer never panics.
-		fmt.Fprintf(b, "%v", v)
+		// Value is a closed set of types owned by this package. Anything else is a
+		// broken internal invariant (e.g. a new value type whose printer support was
+		// forgotten), not a runtime condition — fail loudly rather than emit a
+		// misleading Go-formatted rendering.
+		panic(fmt.Sprintf("scheme: cannot print value of unknown type %T", v))
 	}
 }
 
