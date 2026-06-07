@@ -27,6 +27,9 @@ go.work.sum
 # env file
 .env
 
+# Temporary working files
+.scratch/
+
 # Editor/IDE
 .idea/
 .vscode/
