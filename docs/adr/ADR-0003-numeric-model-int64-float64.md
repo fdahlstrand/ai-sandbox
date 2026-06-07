@@ -10,8 +10,8 @@ rationals, and complex numbers. Implementing the whole tower is substantial work
 dominated by mechanical edge cases. The learning goal values the *exact/inexact
 distinction* (a distinctive Scheme idea) far more than bignum/rational/complex machinery.
 
-A sub-decision left open: **integer overflow behaviour** for int64 (wrap silently /
-error / promote to float64). Not yet decided.
+A sub-decision, **integer overflow behaviour** for int64 (wrap silently / error /
+promote to float64), was resolved on 2026-06-07 — see the Decision section.
 
 ## Options Considered
 
@@ -28,8 +28,11 @@ error / promote to float64). Not yet decided.
 Two number types: **int64 for exact integers, float64 for inexact reals.** No
 arbitrary-precision integers, rationals, or complex numbers.
 
-Open sub-decision: int64 overflow behaviour (wrap / error / promote) — to be resolved
-during implementation; lean toward erroring or promoting rather than silent wrap.
+int64 overflow behaviour: **raise an error** on `+ - *` overflow rather than wrapping
+or promoting. Rationale — principle of least surprise: silent wrap-around gives a
+mathematically wrong result, and promoting to float64 silently loses exactness; both are
+surprising. Erroring is the honest behaviour given the deliberate absence of bignums.
+The arbitrary-precision fix lives in the deferred numeric-tower roadmap item.
 
 ## Consequences
 

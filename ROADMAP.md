@@ -15,5 +15,5 @@ pedagogical: features earn their place by what they teach about Scheme.
 - [ ] Macros / `syntax-rules` (hygienic macros) (WIP) — needs a grill-me on approach
 - [ ] First-class continuations / `call/cc` (WIP) — hard in a tree-walker, needs grill-me
 - [ ] In-Scheme condition system: `raise` / `guard` / `with-exception-handler` (see ADR-0006)
-- [ ] `int64` overflow handling decision (wrap / error / promote) — subsumed if numeric tower lands (see ADR-0003) (WIP)
+- [x] `int64` overflow handling decision — resolved: error on overflow (see ADR-0003)
 - [ ] CLI / batch mode: run a file and exit (`interp file.scm`), `-i` flag — beyond the REPL-only entry point (WIP)
